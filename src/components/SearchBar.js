@@ -2,11 +2,19 @@ import React from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
-const SearchBar = () => {
+const SearchBar = ({ term, onTermChange, onTermSubmited }) => {
     return (
         <View style={ styles.backgroundStyle }>
             <Feather style = { styles.iconStyle } name="search" color="black" />
-            <TextInput style = { styles.inputStyle } placeholder="Search"/>
+            <TextInput
+                autoCapitalize = "none"
+                autoCorrect = { false }
+                style = { styles.inputStyle }
+                placeholder = "Search"
+                value = { term }
+                onChangeText = { onTermChange }
+                onEndEditing = { onTermSubmited }
+            />
         </View>
     );
 };
