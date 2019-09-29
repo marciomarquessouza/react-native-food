@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import React, { useState } from 'react';
+import { Text, ScrollView, StyleSheet, View } from 'react-native';
+import BusinessesList from '../components/BusinessesList';
 import SearchBar from '../components/SearchBar';
 import useBusiness from '../hooks/useBusinesses';
 
@@ -8,16 +9,35 @@ const SearchScreen = () => {
     const [term, setTerm] = useState('');
     const [businesses, fetchBusinesses, errorMessage] = useBusiness();
 
+    const filterBusinessByPrice = (price, businessesSource) => {
+        return businessesSource.filter((business) => {
+            return business.price === price
+        });
+    };
+
     return (
-        <View>
+        <>
             <SearchBar
                 term = { term }
                 onTermChange = { setTerm }
                 onTermSubmited = { () => fetchBusinesses(term) }
             />
             { errorMessage ? <Text>{ errorMessage }</Text> : null }
-            <Text>The search returned { businesses.length } results.</Text>
-        </View>
+            <ScrollView>
+                <BusinessesList 
+                    title="Cost Effective" 
+                    businesses = { filterBusinessByPrice('$$', businesses) }
+                />
+                <BusinessesList
+                    title="Bit Pricer"
+                    businesses = { filterBusinessByPrice('$', businesses) }
+                />
+                <BusinessesList
+                    title="Big Spender"
+                    businesses = { filterBusinessByPrice('$$$', businesses) }
+                />
+            </ScrollView>
+        </>
     );
 };
 
