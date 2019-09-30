@@ -5,7 +5,6 @@ import SearchBar from '../components/SearchBar';
 import useBusiness from '../hooks/useBusinesses';
 
 const SearchScreen = () => {
-    
     const [term, setTerm] = useState('');
     const [businesses, fetchBusinesses, errorMessage] = useBusiness();
 
